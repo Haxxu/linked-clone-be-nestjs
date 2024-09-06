@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  linkedin_clone_api_dev:
+    container_name: linkedin_clone_api_dev
+    image: linkedin_clone_api_dev:1.0.0
+    build:
+      context: .
+      target: development
+    command: npm run start:dev
+    ports:
+      - ${PORT}:${PORT}
+    volumes:
+      - ./:/usr/src/app
+    restart: unless-stopped
+    depends_on:
+      - linkedin_clone_postgres
+
+  linkedin_clone_postgres:
+    container_name: ${POSTGRES_HOST}
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_NAME}
+    expose:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+      PGADMIN_LISTEN_ADDRESS: '0.0.0.0'
+      PGADMIN_CONFIG_SERVER_MODE: 'False' # Optional: Disable multi-user mode
+    ports:
+      - 5050:80
+    volumes:
+      - ./pgadmin_servers.json:/pgadmin4/servers.json
+    restart: unless-stopped
+    depends_on:
+      - linkedin_clone_postgres
+
+networks:
+  default:
+    driver: bridge

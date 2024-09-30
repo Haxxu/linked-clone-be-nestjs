@@ -11,7 +11,7 @@ import { FeedModule } from '@modules/feed/feed.module';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.POSTGRES_HOST,
-      port: parseInt(<string>process.env.POSTGRES_PORT),
+      port: parseInt(process.env.POSTGRES_PORT, 10),
       username: process.env.POSTGRES_USERNAME,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_NAME,

@@ -13,8 +13,6 @@ services:
     volumes:
       - ./:/usr/src/app
     restart: unless-stopped
-    depends_on:
-      - linkedin_clone_postgres
 
   linkedin_clone_postgres:
     container_name: ${POSTGRES_HOST}

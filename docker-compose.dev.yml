@@ -11,7 +11,7 @@ services:
     ports:
       - ${PORT}:${PORT}
     volumes:
-      - ./:/usr/src/app
+      - .:/usr/src/app
     restart: unless-stopped
 
   linkedin_clone_postgres:

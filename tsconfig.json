@@ -21,6 +21,14 @@
       "@modules/*": ["src/modules/*"],
       "@configs/*": ["src/configs/*"],
       "@repositories/*": ["src/repositories/*"]
-    }
+    },
+  },
+  "watchOptions": {
+    "watchFile": "dynamicPriorityPolling",
+    "watchDirectory": "dynamicPriorityPolling",
+    "excludeDirectories": [
+      "**/node_modules",
+      "dist"
+    ]
   }
 }

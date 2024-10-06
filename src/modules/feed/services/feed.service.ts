@@ -27,4 +27,14 @@ export class FeedService {
   deletePost(id: number): Observable<DeleteResult> {
     return from(this.feedPostRepository.delete(id));
   }
+
+  findPosts(take: number, skip: number): Observable<FeedPost[]> {
+    return from(
+      this.feedPostRepository
+        .findAndCount({ take, skip })
+        .then(([posts, count]) => {
+          return <FeedPost[]>posts;
+        }),
+    );
+  }
 }

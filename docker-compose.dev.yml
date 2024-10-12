@@ -12,7 +12,6 @@ services:
       - ${PORT}:${PORT}
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules
     depends_on:
       - linkedin_clone_postgres
     command: npm run start:dev

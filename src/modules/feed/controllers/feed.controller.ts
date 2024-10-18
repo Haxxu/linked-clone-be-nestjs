@@ -15,12 +15,16 @@ import { FeedPost } from '../models/feed-post.interface';
 import { Observable } from 'rxjs';
 import { UpdateResult, DeleteResult } from 'typeorm';
 import { JwtGuard } from '@modules/auth/guards/jwt.guard';
+import { Roles } from '@modules/auth/decorators/roles.decorator';
+import { Role } from '@modules/auth/models/role.enum';
+import { RolesGuard } from '@modules/auth/guards/roles.guard';
 
 @Controller('feed')
 export class FeedController {
   constructor(private feedService: FeedService) {}
 
-  @UseGuards(JwtGuard)
+  @Roles(Role.ADMIN, Role.PREMIUM)
+  @UseGuards(JwtGuard, RolesGuard)
   @Post()
   create(@Body() feedPost: FeedPost, @Request() req): Observable<FeedPost> {
     return this.feedService.createPost(req.user, feedPost);
